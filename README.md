@@ -20,7 +20,7 @@ The weather dataset was available as a sqlite file, so sqlalchemy on python was 
 
 ## Results
 
-![Temperature Statistics](images/Temperature_statistics.png?raw=true "Temperature Statistics")
+![Temperature Statistics](https://github.com/Dhanushree27/Surfs_up/blob/main/images/Temperature_statistics.PNG "Temperature Statistics")
 
 From the gathered statistics, we can see that:
 
@@ -40,7 +40,9 @@ a. Retrieve year information and group by based on that. This will allow us to a
 
 `
 results=session.query(extract('year',Measurement.date),Measurement.tobs).filter(extract('month',Measurement.date)==12).all()
+
 df=pd.DataFrame(results,columns=["year","temp"])
+
 df.groupby(["year"]).describe()
 `
 
@@ -50,9 +52,10 @@ b. In case it is concerning as to the number of the days where there is a temper
 
 `
 avg=session.query(func.avg(Measurement.tobs)).filter(extract('month',Measurement.date)==12).all()
+
 avg=list(np.ravel(avg))
-session.query(func.count(Measurement.tobs)).filter(extract('month',Measurement.date)==12).\
-filter(avg[0]-Measurement.tobs>4).all()
+
+session.query(func.count(Measurement.tobs)).filter(extract('month',Measurement.date)==12).filter(avg[0]-Measurement.tobs>4).all()
 `
 
 Also, we could have retrieved the precipitation information as well and performed a similar analysis. 
